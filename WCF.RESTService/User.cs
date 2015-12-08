@@ -12,7 +12,7 @@ namespace WCF.RESTService
         [DataMember]
         public int Year { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public DateTime Time { get; set; }
         public override string ToString()
         {
