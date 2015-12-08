@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using System.Text;
 using System.Xml;
 
 
@@ -100,16 +101,26 @@ namespace WCF.RESTService.Inspector
                     Message responseMsg = mb.CreateMessage();
                     reply = mb.CreateMessage();
 
-
-                    using (XmlDictionaryReader reader = responseMsg.GetReaderAtBodyContents())
+                    XmlDictionaryReader bodyReader = responseMsg.GetReaderAtBodyContents();
+                    if (bodyReader.IsStartElement("Binary"))
                     {
-                        messageInfo.Response = reader.ReadOuterXml();
-                                      
+                        bodyReader.ReadStartElement("Binary");
+                        byte[] bodyBytes = bodyReader.ReadContentAsBase64();
+                        messageInfo.Response = Encoding.UTF8.GetString(bodyBytes);
+                    }
+                    else
+                    {
+                        messageInfo.Response = bodyReader.ReadOuterXml();
                     }
 
                     if (reply.IsFault)
                     {
                         messageInfo.IsError = true;
+                    }
+
+                    if (messageInfo.Response.Contains("<Binary>"))
+                    {
+
                     }
 
                     string message = String.Format("Response => {0} {1}", messageInfo.ServerEndTimeStamp.ToString(CultureInfo.InvariantCulture), messageInfo.Response);
