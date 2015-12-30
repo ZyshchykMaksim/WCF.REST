@@ -4,46 +4,38 @@ using WebSocketSharp.Server;
 
 namespace WCF.RESTService.Notification
 {
-    public class WebSocketNotification : INotification
-    {
-        private static WebSocketServer _wssv = (WebSocketServer)null;
-        private bool _isDisplayConsole = true;
-        private bool _isLogFile = false;
+	public class WebSocketNotification : INotification
+	{
+		private static WebSocketServer _wssv;
 
-        public WebSocketNotification(string url, bool isDisplayConsole, bool isLogFile)
-        {
-            try
-            {
-                this._isDisplayConsole = isDisplayConsole;
-                this._isLogFile = isLogFile;
-                WebSocketNotification._wssv = new WebSocketServer(url);
-                WebSocketNotification._wssv.AddWebSocketService<DefaultWebSocketBehavior>("/");
-                WebSocketNotification._wssv.Start();
-            }
-            catch (System.Exception ex)
-            {
-                if (WebSocketNotification._wssv != null)
-                    WebSocketNotification._wssv.Stop();
+		private bool _isLogFile = false;
 
-                if (isDisplayConsole)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+		public WebSocketNotification(string url, bool isLogFile)
+		{
+			try
+			{
 
-                throw;
-            }
-        }
+				this._isLogFile = isLogFile;
+				_wssv = new WebSocketServer(url);
+				_wssv.AddWebSocketService<DefaultWebSocketBehavior>("/");
+				_wssv.Start();
+			}
+			catch (System.Exception ex)
+			{
+				if (_wssv != null)
+					_wssv.Stop();
 
-        public void Send(string msg)
-        {
-            if (string.IsNullOrWhiteSpace(msg) || (WebSocketNotification._wssv == null || WebSocketNotification._wssv.WebSocketServices.Count <= 0))
-                return;
-            WebSocketNotification._wssv.WebSocketServices.Broadcast(msg);
-            string message = string.Format("Push notification websocket => {0}", (object)msg);
-            if (this._isDisplayConsole)
-                Debug.WriteLine(message);
+				throw;
+			}
+		}
 
-        }
+		public void Send(string msg)
+		{
+			if (string.IsNullOrWhiteSpace(msg) || (_wssv == null || _wssv.WebSocketServices.Count <= 0))
+				return;
 
-    }
+			_wssv.WebSocketServices.Broadcast(msg);
+		}
+
+	}
 }

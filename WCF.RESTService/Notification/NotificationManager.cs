@@ -3,9 +3,9 @@
     public class NotificationManager
     {
         public static INotification Notification { get; private set; }
-        public void Create(string url, bool isDisplayConsole, bool isLogFile)
+        public void Create(string url, bool isLogFile)
         {
-            Notification = new WebSocketNotification(url, isDisplayConsole, isLogFile);
+            Notification = new WebSocketNotification(url, isLogFile);
         }
     }
 }
