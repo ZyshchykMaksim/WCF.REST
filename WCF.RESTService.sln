@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.RESTService", "WCF.RESTService\WCF.RESTService.csproj", "{624B21A7-4D67-4069-9F62-5D96D9BFA97F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.RESTService.Host", "WCF.RESTService.Host\WCF.RESTService.Host.csproj", "{0BF3F4A7-548D-4357-8233-88FCA12D6A11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.WebSocket", "Web.WebSocket\Web.WebSocket.csproj", "{D197B048-5039-4293-BA72-629B44E918C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0BF3F4A7-548D-4357-8233-88FCA12D6A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF3F4A7-548D-4357-8233-88FCA12D6A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF3F4A7-548D-4357-8233-88FCA12D6A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D197B048-5039-4293-BA72-629B44E918C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D197B048-5039-4293-BA72-629B44E918C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D197B048-5039-4293-BA72-629B44E918C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D197B048-5039-4293-BA72-629B44E918C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

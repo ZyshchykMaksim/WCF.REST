@@ -1,0 +1,51 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>WebSocket</title>
+</head>
+<body>
+	<h2>Push messages</h2>
+	<div id="messages">
+
+	</div>
+
+	<script type="text/javascript">
+
+		var messages = document.getElementById('messages'),
+			socket = new WebSocket("ws://localhost:8081/");
+
+		socket.onopen = function () {
+			showMessage("Соединение установлено.");
+		};
+
+		socket.onclose = function (event) {
+			if (event.wasClean) {
+				showMessage('Соединение закрыто чисто');
+			} else {
+				showMessage('Обрыв соединения');
+			}
+			showMessage('Код: ' + event.code + ' причина: ' + event.reason);
+		};
+
+		socket.onmessage = function (event) {
+			showMessage(event.data);
+		};
+
+		socket.onerror = function (error) {
+			showMessage("Ошибка " + error.message);
+		};
+
+		function showMessage(message) {
+			var messageElem = document.createElement('div');
+
+			messageElem.appendChild(document.createTextNode(message));
+			messages.appendChild(messageElem);
+		}
+	</script>
+</body>
+</html>
