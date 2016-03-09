@@ -7,42 +7,34 @@ using WCF.RESTService.Notification;
 
 namespace WCF.RESTService
 {
-	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-	public class RESTService : IRESTService
-	{
-		static Timer _timer;
-		private static List<User> _users = new List<User>();
-		public INotification Notification
-		{
-			get { return NotificationManager.Notification; }
-		}
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public class RESTService : IRESTService
+    {
+        static Timer _timer;
+        private static List<User> _users;
+        public INotification Notification
+        {
+            get { return NotificationManager.Notification; }
+        }
 
-		public RESTService()
-		{
-			_timer = new Timer(5000) { Enabled = true };
-			_timer.Elapsed += (sender, args) =>
-			{
-				if (Notification != null)
-				{
-					Notification.Send(String.Format("DateTime => {0}", DateTime.Now));
-				}
-			};
-		}
+        public RESTService()
+        {
+            _users = DataHelper.GetUsers();
 
-		public List<User> GetAllUsers()
-		{
-			return _users;
-		}
+            _timer = new Timer(5000) { Enabled = true };
+            _timer.Elapsed += (sender, args) =>
+            {
+                if (Notification != null)
+                {
+                    Notification.Send(String.Format("DateTime => {0}", DateTime.Now));
+                }
+            };
+        }
 
-		public void SetUser(User user)
-		{
-			_users.Add(user);
-		}
-
-		public User GetUser()
-		{
-			return new User() { Name = "Mike", Year = 123 };
-		}
-	}
+        public List<User> GetAllUsers()
+        {
+            return _users;
+        }
+    }
 }
 

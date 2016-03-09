@@ -14,13 +14,5 @@ namespace WCF.RESTService.Interface
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetAllUsers", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         List<User> GetAllUsers();
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/SetUser", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        void SetUser(User user);
-
-        [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetUser", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        User GetUser();
     }
 }
