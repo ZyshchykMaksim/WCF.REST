@@ -3,21 +3,78 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>WebSocket</title>
+  <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" />
 </head>
 <body>
-<h2>Push messages</h2>
-<strong>Test</strong>
-<div id="messages"></div>
+  <div class="container">
+    <div id="allUsers">
+      <h1>REST API</h1>
+      <table id="myTable" class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Year of birth</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p>
+        <h3>Code</h3>
+        <code>
+          $.ajax({ <br />
+          url: 'http://localhost:8080/API/GetAllUsers',<br />
+          dataType: 'json',<br />
+          success: function(data){<br />
+          // business logic...<br />
+          }<br />
+          });
+        </code>
+      </p>
+      <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+        Send request
+      </button>
+    </div>
+
+    <h1>WebSocket</h1>
+    <div id="messages"></div>
+  </div>
 
   <script src="@Url.Content("~/scripts/jquery-2.2.1.js")"></script>
   <script src="@Url.Content("~/scripts/bootstrap.js")"></script>
+
   <script type="text/javascript">
-    var messages = document.getElementById('messages'),
-			socket = new WebSocket("ws://localhost:8081/");
+
+    var btnSendRequest = $('#myButton'),
+      messages = $('#messages'),
+      socket = new WebSocket("ws://localhost:8081/");
+
+    btnSendRequest.on('click', function () {
+      var $btn = $(this).button('loading');
+
+      $.ajax({
+        url: 'http://localhost:8080/API/GetAllUsers',
+        dataType: 'json',
+        success: function (data) {
+          if (data && data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+              $("#myTable > tbody").append(
+                "<tr>" +
+                "<td>" + data[i].Name + "</td>" +
+                "<td>" + data[i].YearOfBirth + "</td>" +
+                "<td>" + data[i].Phone + "</td>" +
+                "<td>" + data[i].Email + "</td>" +
+                "</tr>");
+            }
+          }
+          $btn.button('reset');
+        }
+      });
+    });
 
     socket.onopen = function () {
       showMessage("Соединение установлено.");
@@ -42,9 +99,8 @@
 
     function showMessage(message) {
       var messageElem = document.createElement('div');
-
       messageElem.appendChild(document.createTextNode(message));
-      messages.appendChild(messageElem);
+      messages.append(messageElem);
     }
   </script>
 </body>
