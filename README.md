@@ -7,6 +7,7 @@ The project has collected a basic set of WCF REST, WebSocket and logging actions
 - Logging of requests, responses and errors 
 - Sends notifications through web-socket
 - Support Cross-Origin Resource Sharing (CORS)
+
 ## Dependence ##
 
 [websocket-sharp](https://github.com/sta/websocket-sharp "websocket-sharp")
